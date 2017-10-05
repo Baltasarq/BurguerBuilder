@@ -6,13 +6,14 @@ package com.devbaltasarq.burguerbuilder.core;
  */
 
 public class BurguerConfigurator {
+    public static final String DELIMITER = ", ";
     public static final double BASE_COST = 3.0;
 
     public BurguerConfigurator()
     {
         this.selected = new boolean[ INGREDIENTS.length ];
 
-        assert INGREDIENTS.length != this.COSTS.length:
+        assert INGREDIENTS.length != COSTS.length:
                 "all arrays should have the same length";
     }
 
@@ -36,6 +37,44 @@ public class BurguerConfigurator {
     public boolean[] getSelected()
     {
         return this.selected;
+    }
+
+    @Override
+    public String toString()
+    {
+        String delimiter = "";
+        StringBuilder toret = new StringBuilder();
+
+        for(int i = 0; i < this.selected.length; ++i) {
+            if ( this.selected[ i ] ) {
+                toret.append( delimiter );
+                toret.append( INGREDIENTS[ i ] );
+                delimiter = DELIMITER;
+            }
+        }
+
+        return toret.toString();
+    }
+
+    /** Returns selected ingredients as a string.
+     *  @returns A single string with the whole contents.*/
+    public String toList()
+    {
+        return this.toListWith( DELIMITER );
+    }
+
+    /** Returns selected ingredients as a string.
+     *  @param newDelimiter The delimiter to use to end each line.
+     *  @returns A single string with the whole contents.*/
+    public String toListWith(String newDelimiter)
+    {
+        return this.toString().replace( DELIMITER, newDelimiter );
+    }
+
+    /** Returns the number of ingredients available. */
+    public static int getNumIngredients()
+    {
+        return INGREDIENTS.length;
     }
 
     /** Represents all available ingredients */
