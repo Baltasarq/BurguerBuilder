@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.devbaltasarq.burguerbuilder", appContext.getPackageName());
+        assertEquals("com.devbaltasarq.burguerbuilding", appContext.getPackageName());
     }
 }

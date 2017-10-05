@@ -5,10 +5,10 @@ package com.devbaltasarq.burguerbuilder.core;
  * Created by baltasarq on 5/10/17.
  */
 
-public class BurguerSelector {
+public class BurguerConfigurator {
     public static final double BASE_COST = 3.0;
 
-    public BurguerSelector()
+    public BurguerConfigurator()
     {
         this.totalCost = BASE_COST;
 

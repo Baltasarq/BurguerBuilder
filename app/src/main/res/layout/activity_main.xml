@@ -42,7 +42,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.7"
             android:text="0"
-            android:textAlignment="textEnd" />
+            android:textAlignment="textEnd"
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/textView4"
