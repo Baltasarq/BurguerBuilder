@@ -1,7 +1,6 @@
 package com.devbaltasarq.burguerbuilder.view;
 
 import android.content.DialogInterface;
-import android.os.Debug;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -47,7 +46,21 @@ public class MainActivity extends AppCompatActivity {
     {
         final TextView lblTotal = (TextView) this.findViewById( R.id.lblTotal );
 
-        lblTotal.setText( Double.toString( MainActivity.this.cfgBurguer.getTotalCost() ) );
+        // Report
+        Log.i( "MainActivity.updTotals", "Starting updating." );
+        for(int i = 0; i < BurguerConfigurator.INGREDIENTS.length; ++i) {
+            Log.i( "MainActivity.updTotals",
+                    BurguerConfigurator.INGREDIENTS[ i ]
+                    + " (" + BurguerConfigurator.COSTS[ i ] + ")"
+                    + ": " + ( this.cfgBurguer.getSelected()[ i ] ? "Yes" : "No" )
+            );
+        }
+
+        Log.i( "MainActivity.updTotals", "Total cost: "  + this.cfgBurguer.calculateCost() );
+
+            // Update
+        lblTotal.setText( Double.toString( MainActivity.this.cfgBurguer.calculateCost() ) );
+        Log.i( "MainActivity.updTotals", "End updating." );
     }
 
     private void showIngredientsDialog()
@@ -67,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        dlg.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        dlg.setPositiveButton( "Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 MainActivity.this.updateTotals();

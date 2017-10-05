@@ -10,19 +10,9 @@ public class BurguerConfigurator {
 
     public BurguerConfigurator()
     {
-        this.totalCost = BASE_COST;
+        this.selected = new boolean[ INGREDIENTS.length ];
 
-        this.selected = new boolean[] {
-                false,
-                false,
-                false,
-                false,
-                false
-        };
-
-        assert ( INGREDIENTS.length != this.COSTS.length
-                || INGREDIENTS.length != this.selected.length
-                || COSTS.length != this.selected.length ):
+        assert INGREDIENTS.length != this.COSTS.length:
                 "all arrays should have the same length";
     }
 
@@ -40,24 +30,6 @@ public class BurguerConfigurator {
         }
 
         return toret;
-    }
-
-    /** Goes back to the initial state, simple buguer, no ingredients at all */
-    public void reset()
-    {
-        this.totalCost = BASE_COST;
-
-        for(int i = 0; i < this.selected.length; ++i) {
-            this.selected[ i ] = false;
-        }
-
-        return;
-    }
-
-    /** Returns the total cost with the current ingredient selection */
-    public double getTotalCost()
-    {
-        return this.totalCost;
     }
 
     /** Returns the live boolean vector for ingredient selection */
@@ -85,5 +57,4 @@ public class BurguerConfigurator {
     };
 
     private boolean[] selected;
-    private double totalCost;
 }

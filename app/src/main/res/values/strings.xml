@@ -3,4 +3,5 @@
     <string name="lblTotal">Total</string>
     <string name="lblBurguer">Burguer</string>
     <string name="lblIngredientSelection">Select ingredients</string>
+    <string name="lblCurrency">€</string>
 </resources>
