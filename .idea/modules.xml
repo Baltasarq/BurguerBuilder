@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$USER_HOME$/Dropbox/Prys/Android/BurguerBuilding/BurguerBuilding.iml" filepath="$USER_HOME$/Dropbox/Prys/Android/BurguerBuilding/BurguerBuilding.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BurguerBuilding.iml" filepath="$PROJECT_DIR$/BurguerBuilding.iml" />
       <module fileurl="file://$USER_HOME$/Dropbox/Prys/Android/BurguerBuilding/app/app.iml" filepath="$USER_HOME$/Dropbox/Prys/Android/BurguerBuilding/app/app.iml" />
     </modules>
   </component>

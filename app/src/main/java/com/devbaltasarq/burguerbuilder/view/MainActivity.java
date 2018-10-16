@@ -12,12 +12,14 @@ import android.widget.TextView;
 import com.devbaltasarq.burguerbuilder.R;
 import com.devbaltasarq.burguerbuilder.core.BurguerConfigurator;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        super.onCreate( savedInstanceState );
+        this.setContentView( R.layout.activity_main );
 
         // Create the burguer configuration
         this.cfgBurguer = new BurguerConfigurator();
@@ -27,28 +29,17 @@ public class MainActivity extends AppCompatActivity {
                 + BurguerConfigurator.INGREDIENTS.length );
 
         for(int i = 0; i < BurguerConfigurator.INGREDIENTS.length; ++i) {
-            Log.i( "MainActivity.OnCreate", "Availabel ingredient: "
+            Log.i( "MainActivity.OnCreate", "Available ingredients: "
                     + BurguerConfigurator.INGREDIENTS[ i ] );
         }
 
         // Create callback for the button allowing to check prices
-        Button btPrices = (Button) this.findViewById( R.id.btPrices );
-        btPrices.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity.this.showPricesDialog();
-            }
-        });
+        final Button btPrices = (Button) this.findViewById( R.id.btPrices );
+        btPrices.setOnClickListener( (v) -> this.showPricesDialog() );
 
         // Create callback for the button allowing to select ingredients
-        Button btIngredients = (Button) this.findViewById( R.id.btIngredients );
-        btIngredients.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity.this.showIngredientsDialog();
-            }
-        });
-
+        final Button btIngredients = (Button) this.findViewById( R.id.btIngredients );
+        btIngredients.setOnClickListener( (v) -> this.showIngredientsDialog() );
         this.updateTotals();
     }
 
@@ -70,52 +61,47 @@ public class MainActivity extends AppCompatActivity {
         Log.i( "MainActivity.updTotals", "Total cost: "  + this.cfgBurguer.calculateCost() );
 
             // Update
-        lblTotal.setText( Double.toString( MainActivity.this.cfgBurguer.calculateCost() ) );
+        lblTotal.setText(
+                String.format( Locale.getDefault(),
+                               "%5.2f",
+                                MainActivity.this.cfgBurguer.calculateCost() ) );
         lblSelection.setText( "─" + this.cfgBurguer.toListWith( "\n─" ) );
         Log.i( "MainActivity.updTotals", "End updating." );
     }
 
     private void showIngredientsDialog()
     {
-        final boolean[] selections = this.cfgBurguer.getSelected();
         AlertDialog.Builder dlg = new AlertDialog.Builder( this );
+
         dlg.setTitle( this.getResources().getString( R.string.lblIngredientSelection) );
 
         dlg.setMultiChoiceItems(
                 BurguerConfigurator.INGREDIENTS,
-                selections,
-                new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-                        selections[ i ] = b;
-                    }
-                }
-        );
+                this.cfgBurguer.getSelected(),
+                (d, pos, value) -> {
+                    this.cfgBurguer.setSelected( pos, value );
+                });
 
-        dlg.setPositiveButton( "Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                MainActivity.this.updateTotals();
-            }
-        });
+        dlg.setPositiveButton( "Ok", (v, i) -> this.updateTotals() );
         dlg.create().show();
     }
 
     private void showPricesDialog()
     {
-        final String[] ingredientsWithPrices = new String[ BurguerConfigurator.getNumIngredients() ];
+        final StringBuilder desc = new StringBuilder();
         final TextView lblData = new TextView( this );
         AlertDialog.Builder dlg = new AlertDialog.Builder( this );
         dlg.setTitle( this.getResources().getString( R.string.lblPrices) );
 
         // Build list with prices
-        for(int i = 0; i < ingredientsWithPrices.length; ++i) {
-            ingredientsWithPrices[ i ] = String.format( "%4.2f€ %s",
-                                                        BurguerConfigurator.COSTS[ i ],
-                                                        BurguerConfigurator.INGREDIENTS[ i ] );
+        for(int i = 0; i < BurguerConfigurator.getNumIngredients(); ++i) {
+            desc.append( String.format( Locale.getDefault(), "%4.2f€ %s",
+                            BurguerConfigurator.COSTS[ i ],
+                            BurguerConfigurator.INGREDIENTS[ i ] ) );
+            desc.append( '\n' );
         }
 
-        lblData.setText( String.join( "\n", ingredientsWithPrices ) );
+        lblData.setText( desc.toString() );
         lblData.setPadding( 10, 10, 10, 10 );
         dlg.setView( lblData );
         dlg.setPositiveButton( "Ok", null );

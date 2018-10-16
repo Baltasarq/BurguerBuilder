@@ -33,10 +33,16 @@ public class BurguerConfigurator {
         return toret;
     }
 
+    /** Changes the selection of the ingredient in the given pos with value. */
+    public void setSelected(int pos, boolean value)
+    {
+        this.selected[ pos ] = value;
+    }
+
     /** Returns the live boolean vector for ingredient selection */
     public boolean[] getSelected()
     {
-        return this.selected;
+        return java.util.Arrays.copyOf( this.selected, this.selected.length );
     }
 
     @Override
